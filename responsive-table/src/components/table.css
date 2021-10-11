@@ -12,7 +12,7 @@ body {
   border-collapse: collapse;
 }
 .table thead {
-  background-color: rgba(114, 108, 108, 0.801);
+  background-color: rgba(158, 152, 152, 0.747);
 }
 .table thead tr th {
   font-size: 14px;
@@ -22,6 +22,7 @@ body {
   opacity: 1;
   padding: 12px;
   vertical-align: top;
+  text-align: center;
   border: 1px solid #f9fdfdc9;
 }
 .table tbody tr td {
@@ -29,7 +30,7 @@ body {
   font-weight: normaL;
   letter-spacing: 0.35px;
   color: #080808;
-  background-color: #ece2e29c;
+  background-color: #f8f6f6e3;
   padding: 8px;
   text-align: center;
   border: 1px solid #dee2e685;
@@ -38,7 +39,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 0.35px;
-  color: #ff1046;
+  color: #8a8586;
 }
 
 @media (max-width: 768px) {

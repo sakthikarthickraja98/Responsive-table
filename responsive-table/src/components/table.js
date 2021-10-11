@@ -4,37 +4,38 @@ import './table.css';
 
 import ReactPaginate from 'react-paginate';
 
-// import Paginationbox from './pagination'; 
-import { Grid, Input, Pagination, Segment } from 'semantic-ui-react'
-
 
 const Table = () => {
 
     const [tableDetails, setTableDetails] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [previousPage, setPreviousPage] = useState('');
-    const [nextPage, setNextPage] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const [activePage, setActivePage] = useState(1);
-    
-    const handlePaginationChange = (e) => {setActivePage(e.selected)}
 
-    const fetchBlogs = async(activePage) => {
+    const handlePageClick = (data) => {
+
+        let currentPage = data.selected + 1
+        setCurrentPage(currentPage);
+        console.log(currentPage,'current page');
+    }
+
+    const fetchBlogs = async() => {
             setLoading(true);
-            const res = await axios.get(`https://swapi.dev/api/people/?page=${activePage}`);
+            const url = `https://swapi.dev/api/people/?page=${currentPage}`
+            console.log(url,'url')
+            const res = await axios.get(`https://swapi.dev/api/people/?page=${currentPage}`);
             console.log(res.data)
             setTableDetails(res.data.results);
-            setPreviousPage(res.data.previous);
-            setNextPage(res.data.next);
     };
 
-    useEffect(() => {fetchBlogs()},[]);
+    useEffect(() => {fetchBlogs()},[currentPage]);
     
     if (!loading){
         return <h4>Loading...</h4>;
     }
 
     return (
+        <div>
         <div className="tableContainer" >
             <table className="table">
                 <thead>
@@ -48,7 +49,6 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    
                         {tableDetails.map(item => 
                         <tr key={item.name}>
                         <td data-label="Name">{item.name}</td>
@@ -59,47 +59,32 @@ const Table = () => {
                         <td data-label="Gender">{item.gender}</td>
                         </tr>
                         )}
-                    
-                    {/* <tr>
-                        <td data-label="Name">sakthi</td>
-                        <td data-label="Height">123</td>
-                        <td data-label="Mass">12.3</td>
-                        <td data-label="Hair Color">black</td>
-                        <td data-label="Skin Color">fair</td>
-                        <td data-label="Gender">male</td>
-                    </tr>                    <tr>
-                        <td data-label="Name">Karthick</td>
-                        <td data-label="Height">123</td>
-                        <td data-label="Mass">12.3</td>
-                        <td data-label="Hair Color">black</td>
-                        <td data-label="Skin Color">fair</td>
-                        <td data-label="Gender">male</td>
-                    </tr>                    <tr>
-                        <td data-label="Name">Raja</td>
-                        <td data-label="Height">123</td>
-                        <td data-label="Mass">12.3</td>
-                        <td data-label="Hair Color">black</td>
-                        <td data-label="Skin Color">fair</td>
-                        <td data-label="Gender">male</td>
-                    </tr>                    <tr>
-                        <td data-label="Name">sakthi Karthick Raja</td>
-                        <td data-label="Height">123</td>
-                        <td data-label="Mass">12.3</td>
-                        <td data-label="Hair Color">black</td>
-                        <td data-label="Skin Color">fair</td>
-                        <td data-label="Gender">male</td>
-                    </tr> */}
                 </tbody>
             </table>
 
-        {/* <Paginationbox/> */}
-
-        <Pagination
-            activePage={activePage}
-            onPageChange={handlePaginationChange}
-            totalPages={9}
-          />
+        <div style={{display:'flex', alignItems:'center',justifyContent:'center',marginTop:'22px'}}>
+            <ReactPaginate
+             previousLabel={'previous'}
+             nextLable={'next'}
+             breakLable={'...'}
+             pageCount={9}
+             marginPagesDisplayed={3}
+             pageRangeDisplayed={2}
+             onPageChange={handlePageClick}
+             containerClassName={'pagination justify-content-center'}
+             pageClassName={'page-item'}
+             pageLinkClassName={'page-link'}
+             previousClassName={'page-item'}
+             previousLinkClassName={'page-link'}
+             nextClassName={'page-item'}
+             nextLinkClassName={'page-link'}
+             breakClassName={'page-item'}
+             breakLinkClassName={'page-link'}
+             activeClassName={'active'}
+            />
+        </div>
             
+        </div>
         </div>
     )
 }
