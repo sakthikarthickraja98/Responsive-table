@@ -16,15 +16,11 @@ const Table = () => {
 
         let currentPage = data.selected + 1
         setCurrentPage(currentPage);
-        console.log(currentPage,'current page');
     }
 
     const fetchBlogs = async() => {
             setLoading(true);
-            const url = `https://swapi.dev/api/people/?page=${currentPage}`
-            console.log(url,'url')
             const res = await axios.get(`https://swapi.dev/api/people/?page=${currentPage}`);
-            console.log(res.data)
             setTableDetails(res.data.results);
     };
 
